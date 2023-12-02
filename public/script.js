@@ -16,3 +16,15 @@ ws.onmessage = function(event) {
   };
   reader.readAsText(event.data);
 };
+
+function send() {
+  var message = {};
+  message.text = messageInput.value;
+  ws.send(JSON.stringify(message));
+
+  messageInput.value = '';
+}
+
+sendButton.addEventListener('click', () => {
+  send();
+});
