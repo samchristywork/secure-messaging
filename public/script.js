@@ -51,16 +51,48 @@ function decryptString(encryptedStr, secretKey) {
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 
-ws.onmessage = function(event) {
-  console.log(event.data);
-  const reader = new FileReader();
-  reader.onload = function() {
+var messages = [];
+
+function render() {
+  messageContainer.innerHTML = '';
+
+  for (let m of messages) {
+    const result = JSON.parse(m);
+
     var message = document.createElement('div');
 
-    const result = JSON.parse(reader.result);
-    message.textContent = result.text;
+    var bracket = document.createElement('span');
+    bracket.textContent = '> ';
+
+    var text = document.createElement('span');
+
+    text.style.color = result.color;
+    text.textContent = decryptString(result.text, key);
+
+    var date = document.createElement('div');
+    date.style.color = '#888';
+    date.style.fontSize = '0.8em';
+    date.style.marginLeft = '0.5em';
+    date.style.marginRight = '0.5em';
+    date.style.fontFamily = 'monospace';
+    date.style.fontWeight = 'bold';
+    date.style.verticalAlign = 'middle';
+    date.style.display = 'inline-block';
+    date.textContent = result.time;
+
+    message.appendChild(bracket);
+    message.appendChild(text);
 
     messageContainer.appendChild(message);
+    messageContainer.appendChild(date);
+  }
+}
+
+ws.onmessage = function(event) {
+  const reader = new FileReader();
+  reader.onload = function() {
+    messages.push(reader.result);
+    render();
   };
   reader.readAsText(event.data);
 };
