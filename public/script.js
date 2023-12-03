@@ -99,7 +99,10 @@ ws.onmessage = function(event) {
 
 function send() {
   var message = {};
-  message.text = messageInput.value;
+  message.text = encryptString(messageInput.value, key);
+  console.log(message.text);
+  message.color = myColor;
+  message.time = new Date().toLocaleTimeString();
   ws.send(JSON.stringify(message));
 
   messageInput.value = '';
@@ -108,3 +111,7 @@ function send() {
 sendButton.addEventListener('click', () => {
   send();
 });
+
+window.onload = () => {
+  messageInput.focus();
+};
