@@ -3,6 +3,15 @@ const messageContainer = document.getElementById('message-container');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 
+function encryptString(str, secretKey) {
+  return CryptoJS.AES.encrypt(str, secretKey).toString();
+}
+
+function decryptString(encryptedStr, secretKey) {
+  var bytes = CryptoJS.AES.decrypt(encryptedStr, secretKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
 ws.onmessage = function(event) {
   console.log(event.data);
   const reader = new FileReader();
