@@ -7,9 +7,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
-  console.log('New client connected');
   ws.on('message', function incoming(message) {
-    console.log('message received: %s', message);
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
@@ -17,6 +15,8 @@ wss.on('connection', function connection(ws) {
     });
   });
 });
+
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, function() {
