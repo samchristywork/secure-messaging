@@ -2,6 +2,14 @@ const ws = new WebSocket(`ws://${window.location.host}`);
 const messageContainer = document.getElementById('message-container');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
+const keyButton = document.getElementById('key-button');
+
+var key = prompt('Enter key:');
+
+function setKey() {
+  key = prompt('Enter key:');
+  render();
+}
 
 function encryptString(str, secretKey) {
   return CryptoJS.AES.encrypt(str, secretKey).toString();
