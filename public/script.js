@@ -118,8 +118,12 @@ function send() {
   messageInput.value = '';
 }
 
-sendButton.addEventListener('click', () => {
-  send();
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    send();
+
+    return false;
+  }
 });
 
 window.onload = () => {
