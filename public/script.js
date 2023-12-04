@@ -69,6 +69,16 @@ function render() {
     text.style.color = result.color;
     text.textContent = decryptString(result.text, key);
 
+    if (!text.textContent) {
+      text.textContent = "Decryption key was invalid.";
+      text.style.backgroundColor = "#faa";
+      text.style.color = "#000";
+      text.style.borderRadius = "0.5em";
+      text.style.padding = "0.25em";
+      text.style.margin = "0.5em";
+      text.style.border = "1px solid #f00";
+    }
+
     var date = document.createElement('div');
     date.style.color = '#888';
     date.style.fontSize = '0.8em';
